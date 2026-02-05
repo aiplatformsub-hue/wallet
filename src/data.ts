@@ -1,0 +1,73 @@
+import type { FinanceCard, IdentityCard } from "./types";
+
+export const sampleFinanceCards: FinanceCard[] = [
+  {
+    id: "fc1",
+    category: "finance",
+    type: "credit",
+    cardNumber: "4532 •••• •••• 7891",
+    cardHolder: "Alex Johnson",
+    expiryDate: "09/28",
+    network: "visa",
+    bankName: "Chase Sapphire",
+    gradient: "from-indigo-600 via-purple-600 to-pink-500",
+  },
+  {
+    id: "fc2",
+    category: "finance",
+    type: "debit",
+    cardNumber: "5412 •••• •••• 3456",
+    cardHolder: "Alex Johnson",
+    expiryDate: "03/27",
+    network: "mastercard",
+    bankName: "Bank of America",
+    gradient: "from-slate-800 via-slate-700 to-slate-600",
+  },
+  {
+    id: "fc3",
+    category: "finance",
+    type: "credit",
+    cardNumber: "3782 •••• •••• 0012",
+    cardHolder: "Alex Johnson",
+    expiryDate: "12/29",
+    network: "amex",
+    bankName: "Amex Platinum",
+    gradient: "from-emerald-500 via-teal-500 to-cyan-500",
+  },
+];
+
+export const sampleIdentityCards: IdentityCard[] = [
+  {
+    id: "id1",
+    category: "identity",
+    idType: "drivers_license",
+    fullName: "Alex Johnson",
+    idNumber: "DL-8294-7361",
+    issueDate: "01/2022",
+    expiryDate: "01/2030",
+    issuingAuthority: "California DMV",
+    gradient: "from-amber-500 via-orange-500 to-red-500",
+  },
+  {
+    id: "id2",
+    category: "identity",
+    idType: "passport",
+    fullName: "Alex Johnson",
+    idNumber: "P-5839201",
+    issueDate: "06/2021",
+    expiryDate: "06/2031",
+    issuingAuthority: "U.S. Department of State",
+    gradient: "from-blue-700 via-blue-600 to-sky-500",
+  },
+  {
+    id: "id3",
+    category: "identity",
+    idType: "student_id",
+    fullName: "Alex Johnson",
+    idNumber: "STU-2024-88421",
+    issueDate: "09/2024",
+    expiryDate: "06/2028",
+    issuingAuthority: "Stanford University",
+    gradient: "from-rose-500 via-fuchsia-500 to-violet-500",
+  },
+];
