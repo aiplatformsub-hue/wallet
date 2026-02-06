@@ -8,27 +8,27 @@ interface DisplayToggleProps {
 
 export function DisplayToggle({ mode, onToggle }: DisplayToggleProps) {
   return (
-    <div className="flex items-center gap-1 bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-sm border border-gray-200/60">
+    <div className="flex items-center gap-0.5 glass rounded-full p-0.5">
       <button
         onClick={() => onToggle("regular")}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 cursor-pointer ${
           mode === "regular"
-            ? "bg-gray-900 text-white shadow-md"
-            : "text-gray-500 hover:text-gray-700"
+            ? "bg-white/30 text-white shadow-sm"
+            : "text-white/50 hover:text-white/80"
         }`}
       >
-        <Monitor size={14} />
+        <Monitor size={12} />
         <span>Regular</span>
       </button>
       <button
         onClick={() => onToggle("eink")}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 cursor-pointer ${
           mode === "eink"
-            ? "bg-gray-900 text-white shadow-md"
-            : "text-gray-500 hover:text-gray-700"
+            ? "bg-white/30 text-white shadow-sm"
+            : "text-white/50 hover:text-white/80"
         }`}
       >
-        <BookOpen size={14} />
+        <BookOpen size={12} />
         <span>E-Ink</span>
       </button>
     </div>

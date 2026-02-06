@@ -98,20 +98,20 @@ export function AddCardModal({ isOpen, onClose, activeTab, onAddFinanceCard, onA
   }
 
   const inputClass =
-    "w-full px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 transition-all";
+    "w-full px-3 py-2.5 rounded-xl glass-input text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/40 transition-all";
   const labelClass = "block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1.5";
   const selectClass =
-    "w-full px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 transition-all appearance-none";
+    "w-full px-3 py-2.5 rounded-xl glass-input text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-white/40 transition-all appearance-none";
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-md bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl max-h-[85vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white/90 backdrop-blur-sm px-6 pt-6 pb-3 flex items-center justify-between border-b border-gray-100 rounded-t-3xl z-10">
-          <h2 className="text-lg font-bold text-gray-900">
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-md" onClick={onClose} />
+      <div className="relative w-full max-w-md glass-modal rounded-t-3xl sm:rounded-3xl shadow-2xl max-h-[85vh] overflow-y-auto safe-bottom">
+        <div className="sticky top-0 glass-modal px-6 pt-6 pb-3 flex items-center justify-between border-b border-white/20 rounded-t-3xl z-10">
+          <h2 className="text-lg font-bold text-gray-800">
             {activeTab === "finance" ? "Add Card" : "Add ID"}
           </h2>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors cursor-pointer">
+          <button onClick={onClose} className="w-8 h-8 rounded-full glass flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors cursor-pointer">
             <X size={16} />
           </button>
         </div>
@@ -170,7 +170,7 @@ export function AddCardModal({ isOpen, onClose, activeTab, onAddFinanceCard, onA
                 <label className={labelClass}>Expiry Date</label>
                 <input type="text" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} placeholder="MM/YY" maxLength={5} className={inputClass} required />
               </div>
-              <button type="submit" className="w-full py-3 bg-gray-900 text-white rounded-xl font-semibold text-sm hover:bg-gray-800 transition-colors cursor-pointer">
+              <button type="submit" className="w-full py-3 glass-dark text-white rounded-xl font-semibold text-sm hover:bg-black/25 transition-all cursor-pointer">
                 Add Card
               </button>
             </form>
@@ -207,7 +207,7 @@ export function AddCardModal({ isOpen, onClose, activeTab, onAddFinanceCard, onA
                   <input type="text" value={idExpiry} onChange={(e) => setIdExpiry(e.target.value)} placeholder="MM/YYYY" maxLength={7} className={inputClass} required />
                 </div>
               </div>
-              <button type="submit" className="w-full py-3 bg-gray-900 text-white rounded-xl font-semibold text-sm hover:bg-gray-800 transition-colors cursor-pointer">
+              <button type="submit" className="w-full py-3 glass-dark text-white rounded-xl font-semibold text-sm hover:bg-black/25 transition-all cursor-pointer">
                 Add ID
               </button>
             </form>

@@ -84,18 +84,30 @@ export function IdentityCardView({ card, mode }: IdentityCardViewProps) {
   }
 
   return (
-    <div className={`relative rounded-2xl p-6 bg-gradient-to-br ${card.gradient} text-white overflow-hidden shadow-lg transition-all duration-500`}>
-      <div className="absolute -top-8 -right-8 w-36 h-36 bg-white/10 rounded-full" />
-      <div className="absolute bottom-4 right-4 w-20 h-20 bg-white/5 rounded-full" />
+    <div className={`relative rounded-2xl p-6 overflow-hidden text-white transition-all duration-500 bg-gradient-to-br ${card.gradient}`}
+      style={{
+        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
+      }}
+    >
+      {/* Glass overlay */}
+      <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
+      <div className="absolute -top-8 -right-8 w-36 h-36 bg-white/15 rounded-full blur-sm" />
+      <div className="absolute bottom-4 right-4 w-20 h-20 bg-white/10 rounded-full blur-sm" />
 
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-5">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center"
+              style={{
+                background: "rgba(255,255,255,0.2)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.25)",
+              }}
+            >
               <IdIcon idType={card.idType} />
             </div>
             <div>
-              <p className="text-white text-sm font-bold uppercase tracking-wide">{idTypeLabel(card.idType)}</p>
+              <p className="text-white text-sm font-bold uppercase tracking-wide drop-shadow-sm">{idTypeLabel(card.idType)}</p>
               <p className="text-white/60 text-[10px] uppercase tracking-wider">{card.issuingAuthority}</p>
             </div>
           </div>
@@ -103,7 +115,7 @@ export function IdentityCardView({ card, mode }: IdentityCardViewProps) {
 
         <div className="mb-4 pb-4 border-b border-white/20">
           <p className="text-white/50 text-[10px] uppercase tracking-wider mb-0.5">Full Name</p>
-          <p className="text-white text-base font-bold uppercase tracking-wide">{card.fullName}</p>
+          <p className="text-white text-base font-bold uppercase tracking-wide drop-shadow-sm">{card.fullName}</p>
         </div>
 
         <div className="grid grid-cols-3 gap-3">

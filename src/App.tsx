@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Wallet, Trash2 } from "lucide-react";
 import type { CardCategory, DisplayMode, FinanceCard, IdentityCard } from "./types";
 import { sampleFinanceCards, sampleIdentityCards } from "./data";
@@ -14,6 +14,10 @@ function App() {
   const [financeCards, setFinanceCards] = useState<FinanceCard[]>(sampleFinanceCards);
   const [identityCards, setIdentityCards] = useState<IdentityCard[]>(sampleIdentityCards);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.toggle("eink-mode", displayMode === "eink");
+  }, [displayMode]);
 
   function handleAddFinanceCard(card: FinanceCard) {
     setFinanceCards((prev) => [...prev, card]);
@@ -31,47 +35,56 @@ function App() {
     setIdentityCards((prev) => prev.filter((c) => c.id !== id));
   }
 
-  const einkBg = displayMode === "eink";
+  const eink = displayMode === "eink";
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${einkBg ? "bg-stone-100" : "bg-gray-50"}`}>
-      {/* App container - mobile-first */}
-      <div className="max-w-md mx-auto px-4 py-6 pb-24">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2.5">
-            <div className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-colors duration-500 ${einkBg ? "bg-stone-800" : "bg-gray-900"}`}>
-              <Wallet size={18} className="text-white" />
+    <div className="min-h-screen safe-top transition-all duration-500">
+      <div className="max-w-md mx-auto px-4 py-6 pb-28">
+        {/* Glass header bar */}
+        <div className={`rounded-2xl p-4 mb-5 transition-all duration-500 ${
+          eink ? "bg-stone-50 border-2 border-stone-300" : "glass-strong shadow-lg"
+        }`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                eink ? "bg-stone-800" : "glass-dark"
+              }`}>
+                <Wallet size={18} className="text-white" />
+              </div>
+              <div>
+                <h1 className={`text-lg font-bold transition-colors duration-500 ${
+                  eink ? "text-stone-900" : "text-white"
+                }`}>
+                  Wallet
+                </h1>
+                <p className={`text-[11px] transition-colors duration-500 ${
+                  eink ? "text-stone-500" : "text-white/60"
+                }`}>
+                  {financeCards.length + identityCards.length} cards stored
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className={`text-xl font-bold transition-colors duration-500 ${einkBg ? "text-stone-900" : "text-gray-900"}`}>
-                Wallet
-              </h1>
-              <p className={`text-xs transition-colors duration-500 ${einkBg ? "text-stone-500" : "text-gray-400"}`}>
-                {financeCards.length + identityCards.length} cards stored
-              </p>
-            </div>
+            <DisplayToggle mode={displayMode} onToggle={setDisplayMode} />
           </div>
-          <DisplayToggle mode={displayMode} onToggle={setDisplayMode} />
         </div>
 
         {/* Tab bar */}
         <div className="mb-5">
-          <TabBar activeTab={activeTab} onTabChange={setActiveTab} />
+          <TabBar activeTab={activeTab} onTabChange={setActiveTab} eink={eink} />
         </div>
 
         {/* Cards list */}
         <div className="space-y-4">
           {activeTab === "finance" ? (
             financeCards.length === 0 ? (
-              <EmptyState label="No finance cards yet" eink={einkBg} />
+              <EmptyState label="No finance cards yet" eink={eink} />
             ) : (
               financeCards.map((card) => (
                 <div key={card.id} className="group relative">
                   <FinanceCardView card={card} mode={displayMode} />
                   <button
                     onClick={() => handleDeleteFinance(card.id)}
-                    className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:bg-black/40"
+                    className="absolute top-3 right-3 w-7 h-7 rounded-full glass-dark flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                   >
                     <Trash2 size={12} />
                   </button>
@@ -79,14 +92,14 @@ function App() {
               ))
             )
           ) : identityCards.length === 0 ? (
-            <EmptyState label="No identity cards yet" eink={einkBg} />
+            <EmptyState label="No identity cards yet" eink={eink} />
           ) : (
             identityCards.map((card) => (
               <div key={card.id} className="group relative">
                 <IdentityCardView card={card} mode={displayMode} />
                 <button
                   onClick={() => handleDeleteIdentity(card.id)}
-                  className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:bg-black/40"
+                  className="absolute top-3 right-3 w-7 h-7 rounded-full glass-dark flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                 >
                   <Trash2 size={12} />
                 </button>
@@ -97,14 +110,18 @@ function App() {
       </div>
 
       {/* FAB */}
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className={`fixed bottom-6 right-1/2 translate-x-1/2 w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-white transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer ${
-          einkBg ? "bg-stone-800 shadow-stone-300" : "bg-gray-900 shadow-gray-300"
-        }`}
-      >
-        <Plus size={22} />
-      </button>
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 safe-bottom">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className={`w-14 h-14 rounded-full flex items-center justify-center text-white transition-all duration-500 hover:scale-110 active:scale-95 cursor-pointer ${
+            eink
+              ? "bg-stone-800 shadow-lg shadow-stone-400/30"
+              : "glass-dark shadow-lg shadow-black/20"
+          }`}
+        >
+          <Plus size={22} />
+        </button>
+      </div>
 
       {/* Modal */}
       <AddCardModal
@@ -120,7 +137,11 @@ function App() {
 
 function EmptyState({ label, eink }: { label: string; eink: boolean }) {
   return (
-    <div className={`text-center py-16 rounded-2xl border-2 border-dashed transition-colors duration-500 ${eink ? "border-stone-300 text-stone-400" : "border-gray-200 text-gray-400"}`}>
+    <div className={`text-center py-16 rounded-2xl transition-all duration-500 ${
+      eink
+        ? "border-2 border-dashed border-stone-300 text-stone-400"
+        : "glass border-dashed text-white/60"
+    }`}>
       <Wallet size={32} className="mx-auto mb-3 opacity-40" />
       <p className="text-sm font-medium">{label}</p>
       <p className="text-xs mt-1 opacity-60">Tap + to add one</p>
